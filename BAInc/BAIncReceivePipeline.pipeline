@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="BAInc/Resources/BAIncReceive"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/SNnowIntegrations/BAInc/service1</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-a02bb81.N201f65cd.0.161f3e6b727.N7f67">
+            <con:stage id="_StageId-a02bb81.N201f65cd.0.161f3e6b727.N7f65" name="Stage1">
+                <con:context>
+                    <con2:varNsDecl prefix="exam" namespace="http://www.example.org"/>
+                </con:context>
+                <con:actions>
+                    <con1:validate>
+                        <con2:id>_ActionId-a02bb81.N201f65cd.0.161f3e6b727.N7f31</con2:id>
+                        <con1:schema ref="BAInc/Resources/Schemas/ITServiceDataMessage"/>
+                        <con1:schemaElement xmlns:exam="http://www.example.org">exam:ITServiceDataMessage</con1:schemaElement>
+                        <con1:varName>body</con1:varName>
+                        <con1:location>
+                            <con2:xpathText>./*</con2:xpathText>
+                        </con1:location>
+                        <con1:resultVarName/>
+                    </con1:validate>
+                    <con1:assign varName="SnowIncModReq">
+                        <con2:id>_ActionId-N3f575e55.386097df.0.161f7b3d1d7.N7fce</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<exam:SNowIncMod xmlns:exam="http://www.example.org">
+    <exam:CustomerExternalReference>{$body//exam:IncidentIdentifier/text()}</exam:CustomerExternalReference>
+    <exam:Status>{$body//exam:IncidentStatus/text()}</exam:Status>
+    <exam:Summary>{$body//exam:IncidentTitle/text()}</exam:Summary>
+    <exam:Description>{$body//exam:IncidentDescription/text()}</exam:Description>
+    <exam:Group>{$body//exam:PrimaryAssignGroup/text()}</exam:Group>
+    <exam:Priority>{$body//exam:Severity/text()}</exam:Priority>
+    <exam:ActivityLogs>{$body//exam:CorrectiveActions/text()}</exam:ActivityLogs>
+    <exam:Contact>
+        <exam:FirstName>{$body//exam:ContactFirstName/text()}</exam:FirstName>
+        <exam:LastName>{$body//exam:ContactLastName/text()}</exam:LastName>
+        <exam:EmailAddress>{$body//exam:ContactEmail/text()}</exam:EmailAddress>
+        <exam:PhoneNumber>{$body//exam:ContactPhone/text()}</exam:PhoneNumber>
+    </exam:Contact>
+    <exam:ConfigurationItem>{$body//exam:AffectedAsset/text()}</exam:ConfigurationItem>
+    <exam:Location>{$body//exam:ServiceLocation/text()}</exam:Location>
+</exam:SNowIncMod>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-N3f575e55.386097df.0.161f7b3d1d7.N7f9a</con2:id>
+                        <con1:service ref="BAInc/SNowIncMod" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">SnowIncModReq</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">SnowIncModRes</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform/>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N3f575e55.N34c720ab.1.161f7bf19e9.N7ff9</con2:id>
+                        <con1:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$SnowIncModRes</con:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a02bb81.N201f65cd.0.161f3e6b727.N7f66">
+            <con:stage id="_StageId-a02bb81.N201f65cd.0.161f3e6b727.N7f64" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-a02bb81.N201f65cd.0.161f3e6b727.N7f67</con:request>
+                <con:response>response-a02bb81.N201f65cd.0.161f3e6b727.N7f66</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

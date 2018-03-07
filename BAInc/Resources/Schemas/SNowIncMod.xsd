@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.example.org"
+            targetNamespace="http://www.example.org" elementFormDefault="qualified">
+  <xsd:element name="SNowIncMod">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="CustomerExternalReference"/>
+        <xsd:element name="Status"/>
+        <xsd:element name="Summary"/>
+        <xsd:element name="Description"/>
+        <xsd:element name="Group"/>
+        <xsd:element name="Priority"/>
+        <xsd:element name="ActivityLogs"/>
+        <xsd:element name="Contact">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="FirstName"/>
+              <xsd:element name="LastName"/>
+              <xsd:element name="EmailAddress"/>
+              <xsd:element name="PhoneNumber"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ConfigurationItem"/>
+        <xsd:element name="Location"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+    <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status"/>
+        <xsd:element name="ErrorDescription"/>
+        <xsd:element name="SR_ID"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

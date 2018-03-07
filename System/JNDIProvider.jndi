@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:con="http://www.bea.com/wli/sb/resources/config">
+    <con:description>test</con:description>
+    <con:contextFactory>weblogic.jndi.WLInitialContextFactory</con:contextFactory>
+    <con:envProperties/>
+</xml-fragment>

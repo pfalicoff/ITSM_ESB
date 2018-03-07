@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.example.org"
+            targetNamespace="http://www.example.org" elementFormDefault="qualified">
+  <xsd:element name="ITServiceDataMessage">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ITServicesMessageHeader">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MessageIdentifier"/>
+              <xsd:element name="MessageDateTime"/>
+              <xsd:element name="OriginatingSystem"/>
+              <xsd:element name="DestinationSystem"/>
+              <xsd:element name="MessageFunction"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="IncidentRecord">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="IncidentDetails">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="IncidentIdentifier"/>
+                    <xsd:element name="IncidentStatus"/>
+                    <xsd:element name="IncidentTitle"/>
+                    <xsd:element name="IncidentDescription"/>
+                    <xsd:element name="PrimaryAssignGroup"/>
+                    <xsd:element name="Severity"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="IncidentActivities">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="CorrectiveActions"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="IncidentContact">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="ContactFirstName"/>
+                    <xsd:element name="ContactLastName"/>
+                    <xsd:element name="ContactEmail"/>
+                    <xsd:element name="ContactPhone"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="IncidentAsset">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AffectedAsset"/>
+                    <xsd:element name="ServiceLocation"/>
+                    <xsd:element name="CurrentDetails"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="IncidentHistory"/>
+              <xsd:element name="IncidentSpecificData"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status"/>
+        <xsd:element name="ErrorDescription"/>
+        <xsd:element name="SR_ID"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
